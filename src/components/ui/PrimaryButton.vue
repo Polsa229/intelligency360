@@ -1,41 +1,16 @@
 <template>
-  <button
-    :type="type"
-    :disabled="disabled || loading"
-    :class="[
-      'btn',
-      `btn-${variant}`,
-      `btn-${size}`,
-      { 'btn-loading': loading, 'btn-block': block },
-    ]"
-    @click="handleClick"
-  >
+  <button :type="type" :disabled="disabled || loading" :class="[
+    'btn',
+    `btn-${variant}`,
+    `btn-${size}`,
+    { 'btn-loading': loading, 'btn-block': block },
+  ]" @click="handleClick">
     <span v-if="loading" class="btn-spinner">
-      <svg
-        class="spinner"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-      >
-        <circle
-          cx="8"
-          cy="8"
-          r="6"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-dasharray="30"
-          stroke-dashoffset="10"
-        >
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="0 8 8"
-            to="360 8 8"
-            dur="0.8s"
-            repeatCount="indefinite"
-          />
+      <svg class="spinner" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="30"
+          stroke-dashoffset="10">
+          <animateTransform attributeName="transform" type="rotate" from="0 8 8" to="360 8 8" dur="0.8s"
+            repeatCount="indefinite" />
         </circle>
       </svg>
     </span>
@@ -50,10 +25,7 @@
       <slot>{{ label }}</slot>
     </span>
 
-    <span
-      v-if="icon && iconPosition === 'right'"
-      class="btn-icon btn-icon-right"
-    >
+    <span v-if="icon && iconPosition === 'right'" class="btn-icon btn-icon-right">
       <slot name="icon-right">
         <component :is="icon" />
       </slot>
@@ -74,7 +46,7 @@ const props = defineProps({
     type: String,
     default: "primary",
     validator: (value) =>
-      ["primary", "secondary", "success", "danger", "outline"].includes(value),
+      ["primary", "secondary", "success", "danger", "outline", "outline-secondary"].includes(value),
   },
   size: {
     type: String,
@@ -122,7 +94,8 @@ const handleClick = (event) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
+
   font-weight: 600;
   border: none;
   border-radius: 6px;
@@ -189,6 +162,20 @@ const handleClick = (event) => {
   box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.2);
 }
 
+.btn-outline-secondary {
+  background-color: #FFFFFF;
+  color: #1E1E1E;
+  border: 1px solid #E0E4E7;
+}
+
+.btn-outline-secondary:hover:not(:disabled) {
+  background-color: #eff6ff;
+}
+
+.btn-outline-secondary:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
 .btn-success {
   background-color: #10b981;
   color: white;
@@ -248,6 +235,7 @@ const handleClick = (event) => {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

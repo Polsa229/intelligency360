@@ -14,27 +14,13 @@
       </div>
 
       <div class="summary-actions">
-        <PrimaryButton variant="outline" @click="handleViewCertificate">
-          <template #icon-left>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M10 3C6.13 3 3 6.13 3 10C3 13.87 6.13 17 10 17C13.87 17 17 13.87 17 10C17 6.13 13.87 3 10 3ZM10 15C7.24 15 5 12.76 5 10C5 7.24 7.24 5 10 5C12.76 5 15 7.24 15 10C15 12.76 12.76 15 10 15ZM10.5 7H9V11L12.75 13.15L13.5 11.92L10.5 10.25V7Z"
-                fill="currentColor"
-              />
-            </svg>
-          </template>
-          Voir le certicat
+        <PrimaryButton variant="outline-secondary" @click="handleViewCertificate">
+          <Eye class="btn-icon" />
+          Voir le certificat
         </PrimaryButton>
 
         <PrimaryButton variant="success" @click="handleDownload">
-          <template #icon-left>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M17 11V17H3V11H1V17C1 18.1 1.9 19 3 19H17C18.1 19 19 18.1 19 17V11H17ZM16 6L14.59 7.41L11 3.83V15H9V3.83L5.41 7.41L4 6L10 0L16 6Z"
-                fill="currentColor"
-              />
-            </svg>
-          </template>
+          <ArrowDownToLine class="btn-icon" />
           Télécharger
         </PrimaryButton>
       </div>
@@ -42,125 +28,111 @@
 
     <!-- Stats Cards -->
     <div class="stats-grid">
-      <StatCard
-        title="Progression"
-        variant="progress"
-        value="80%"
-        label="3/12 modules"
-        :show-progress="true"
-        :progress="80"
-      />
-
-      <StatCard
-        title="100%"
-        variant="success"
-        label="Cyberscore de certification"
-      />
-
+      <StatCard title="Progression" variant="progress" value="80%" label="3/12 modules" :show-progress="true"
+        :progress="80" />
+      <StatCard title="100%" variant="success" label="Cyberscore de certification" />
       <StatCard title="100%" variant="success" label="Score moyen des quiz" />
     </div>
 
     <!-- Accordion Section with Modules -->
-    <AccordionSection
-      v-model="isProgressDetailsOpen"
-      title="Détails de la progression"
-      subtitle="Votre progression détaillée, étape après étape."
-    >
-      <div class="modules-grid">
-        <ModuleCard
-          v-for="module in modules"
-          :key="module.id"
-          :id="module.id"
-          :number="module.number"
-          :title="module.title"
-          :description="module.description"
-          :image="module.image"
-          :duration="module.duration"
-          :progress="module.progress"
-          :completed-modules="module.completedModules"
-          :total-modules="module.totalModules"
-          :status="module.status"
-          @click="handleModuleClick"
-        />
+    <AccordionSection v-model="isProgressDetailsOpen" title="Détails de la progression"
+      subtitle="Votre progression détaillée, étape après étape.">
+      <div class="accordion-content-wrapper">
+        <!-- État de chargement -->
+        <div v-if="isLoading" class="loading-state">
+          <div class="skeleton-grid">
+            <div v-for="i in 4" :key="i" class="skeleton-card"></div>
+          </div>
+        </div>
+
+        <!-- État d'erreur -->
+        <div v-else-if="error" class="error-state">
+          <p class="error-message">Erreur de chargement: {{ error }}</p>
+          <PrimaryButton @click="fetchPosts" variant="outline">
+            Réessayer
+          </PrimaryButton>
+        </div>
+
+        <!-- Contenu normal -->
+        <div v-else>
+          <div class="modules-grid">
+            <ModuleCard v-for="(module, index) in displayedPosts" :key="module.id" :id="module.id"
+              :number="(index + 1).toString().padStart(2, '0')" :title="module.title"
+              :description="module.body.substring(0, 120) + '...'" :image="getModuleImage(module.id)"
+              :duration="Math.floor(Math.random() * 20) + 10" :progress="Math.floor(Math.random() * 100)"
+              :completed-modules="Math.floor(Math.random() * 12) + 1" :total-modules="12"
+              :status="getModuleStatus(index)" @click="handleModuleClick" />
+          </div>
+
+          <!-- Bouton Voir Tous -->
+          <div class="view-all-container">
+            <PrimaryButton variant="outline" @click="showModal = true">
+              <Eye class="btn-icon" />
+              Voir tous les contenus ({{ posts.length }})
+            </PrimaryButton>
+          </div>
+        </div>
       </div>
     </AccordionSection>
+
+    <!-- Modal Component -->
+    <PostModal :show="showModal" @close="showModal = false" />
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, onMounted, computed } from "vue";
 import Header from "@/components/ui/Header.vue";
 import StatCard from "@/components/ui/StatCard.vue";
 import AccordionSection from "@/components/ui/AccordionSection.vue";
 import ModuleCard from "@/components/ui/ModuleCard.vue";
 import PrimaryButton from "@/components/ui/PrimaryButton.vue";
+import PostModal from "@/components/ui/PostModal.vue";
+
+import { Eye, ArrowDownToLine } from 'lucide-vue-next';
+
+import { usePostStore } from '@/stores/postStore';
 import "./styles/CertificationDashboard.css";
 
 // State
 const isProgressDetailsOpen = ref(true);
+const showModal = ref(false);
 
-// Modules Data
-const modules = ref([
-  {
-    id: 1,
-    number: "01",
-    duration: 16,
-    title: "Cybersécurité, comprendre les enjeux",
-    description:
-      "Surveillez et contrôlez vos accès pour éviter les intrusions et protéger vos données sensibles.",
-    progress: 35,
-    completedModules: 1,
-    totalModules: 12,
-    status: "in-progress",
-    image:
-      "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop",
-  },
-  {
-    id: 2,
-    number: "02",
-    duration: 16,
-    title: "Cybersécurité, comprendre les enjeux",
-    description:
-      "Surveillez et contrôlez vos accès pour éviter les intrusions et protéger vos données sensibles.",
-    progress: 0,
-    completedModules: 2,
-    totalModules: 12,
-    status: null,
-    image:
-      "https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?w=400&h=300&fit=crop",
-  },
-  {
-    id: 3,
-    number: "03",
-    duration: 16,
-    title: "Sécurité des accès",
-    description:
-      "Surveillez et contrôlez vos accès pour éviter les intrusions et protéger vos données sensibles.",
-    progress: 0,
-    completedModules: 3,
-    totalModules: 12,
-    status: null,
-    image:
-      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=300&fit=crop",
-  },
-  {
-    id: 4,
-    number: "04",
-    duration: 16,
-    title: "Sécurité des accès",
-    description:
-      "Surveillez et contrôlez vos accès pour éviter les intrusions et protéger vos données sensibles.",
-    progress: 0,
-    completedModules: 4,
-    totalModules: 12,
-    status: null,
-    image:
-      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&h=300&fit=crop",
-  },
-]);
+// Utilisation du store Zustand
+const {
+  posts,
+  isLoading,
+  error,
+  fetchPosts,
+  displayedPosts
+} = usePostStore();
 
-// Methods
+// Computed
+// const displayedPosts = computed(() => getDisplayedPosts());
 
+// Charger les données au montage
+onMounted(() => {
+  fetchPosts();
+});
+
+// Images pour les modules
+const getModuleImage = (id) => {
+  const images = [
+    "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop",
+    "https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?w=400&h=300&fit=crop",
+    "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=300&fit=crop",
+    "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&h=300&fit=crop"
+  ];
+  return images[id % images.length];
+};
+
+const getModuleStatus = (index) => {
+  if (index === 0) return "in-progress";
+  if (index === 1) return "completed";
+  return null;
+};
+
+// Méthodes
 const handleViewCertificate = () => {
   console.log("View certificate");
 };

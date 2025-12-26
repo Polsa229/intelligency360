@@ -2,12 +2,7 @@
   <div class="login-container">
     <div class="login-card">
       <!-- Alert Message -->
-      <AlertMessage
-        v-model="showError"
-        variant="error"
-        closable
-        @close="handleCloseError"
-      >
+      <AlertMessage v-model="showError" variant="error" closable @close="handleCloseError">
         Connexion impossible. Vérifiez vos identifiants et réessayez.
       </AlertMessage>
 
@@ -24,26 +19,12 @@
       <!-- Form -->
       <div class="login-form">
         <!-- Email Field -->
-        <InputField
-          v-model="formData.email"
-          label="Email"
-          type="email"
-          placeholder="didi.franck@example.com"
-          required
-          autocomplete="email"
-          :error="errors.email"
-        />
+        <InputField v-model="formData.email" label="Email" type="email" placeholder="didi.franck@example.com" required
+          autocomplete="email" :error="errors.email" />
 
         <!-- Password Field -->
-        <InputField
-          v-model="formData.password"
-          label="Mot de passe"
-          type="password"
-          placeholder="h472by6364_dg77"
-          required
-          autocomplete="current-password"
-          :error="errors.password"
-        />
+        <InputField v-model="formData.password" label="Mot de passe" type="password" placeholder="h472by6364_dg77"
+          required autocomplete="current-password" :error="errors.password" />
 
         <!-- Legal Notice -->
         <p class="legal-notice">
@@ -55,13 +36,7 @@
 
         <div>
           <!-- Submit Button -->
-          <PrimaryButton
-            variant="success"
-            size="medium"
-            block
-            :loading="isLoading"
-            @click="handleSubmit"
-          >
+          <PrimaryButton variant="success" size="medium" block :loading="isLoading" @click="handleSubmit">
             Connexion
           </PrimaryButton>
         </div>
@@ -129,7 +104,7 @@ const handleSubmit = async () => {
 
   // Option 1: Remplir automatiquement avec les valeurs par défaut si les champs sont vides
   if (!formData.email && !formData.password) {
-    formData.email =  "didi.franck@example.com";
+    formData.email = "didi.franck@example.com";
     formData.password = "didi.franck@example.com";
   }
 
@@ -160,4 +135,3 @@ const handleCloseError = () => {
   showError.value = false;
 };
 </script>
-

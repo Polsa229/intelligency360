@@ -2,70 +2,28 @@
   <div class="module-card" @click="handleClick">
     <!-- Image -->
     <div class="module-image-wrapper">
-      <img
-        :src="image"
-        :alt="title"
-        class="module-image"
-        @error="handleImageError"
-      />
+      <img :src="image" :alt="title" class="module-image" @error="handleImageError" />
 
       <!-- Badge Overlay -->
-      <div
-        v-if="badge"
-        class="module-badge"
-        :class="`badge-${badge.variant || 'default'}`"
-      >
+      <div v-if="badge" class="module-badge" :class="`badge-${badge.variant || 'default'}`">
         {{ badge.text }}
       </div>
 
       <!-- Status Overlay -->
       <div v-if="status" class="module-status">
-        <svg
-          v-if="status === 'completed'"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-        >
+        <svg v-if="status === 'completed'" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <circle cx="10" cy="10" r="9" fill="#10b981" />
-          <path
-            d="M6 10L9 13L14 7"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+          <path d="M6 10L9 13L14 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
 
-        <svg
-          v-else-if="status === 'in-progress'"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-        >
+        <svg v-else-if="status === 'in-progress'" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <circle cx="10" cy="10" r="9" fill="#3b82f6" />
-          <path
-            d="M10 6V10L13 12"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
+          <path d="M10 6V10L13 12" stroke="white" stroke-width="2" stroke-linecap="round" />
         </svg>
 
-        <svg
-          v-else-if="status === 'locked'"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-        >
+        <svg v-else-if="status === 'locked'" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <rect x="4" y="9" width="12" height="9" rx="2" fill="#9ca3af" />
-          <path
-            d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9"
-            stroke="#9ca3af"
-            stroke-width="2"
-          />
+          <path d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9" stroke="#9ca3af" stroke-width="2" />
         </svg>
       </div>
     </div>
@@ -78,19 +36,8 @@
         <span class="module-separator">●</span>
         <span class="module-duration">
           <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-            <circle
-              cx="10"
-              cy="10"
-              r="8"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <path
-              d="M10 5V10L13 12"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
+            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" />
+            <path d="M10 5V10L13 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
           </svg>
           {{ duration }} min
         </span>

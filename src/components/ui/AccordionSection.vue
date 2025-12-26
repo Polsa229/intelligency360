@@ -125,6 +125,8 @@ onMounted(() => {
 
 <style scoped>
 .accordion-section {
+  width:100%;
+  max-width: 100%;
   background: white;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -185,6 +187,8 @@ onMounted(() => {
 }
 
 .accordion-content {
+  width: 100%;
+  max-width: 100%;
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
