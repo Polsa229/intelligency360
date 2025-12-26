@@ -24,14 +24,52 @@ tout en respectant les bonnes pratiques de développement, d’architecture et d
 ## 📁 Structure du projet
 
 ```txt
-src/
-├── assets/            # Images et ressources statiques
-├── components/
-│   ├── auth/          # Composants liés à l’authentification
-│   ├── certification/ # Composants métiers
-│   └── ui/             # Composants UI réutilisables
-├── views/             # Pages (liées aux routes)
-├── store/             # Vuex (état global)
-├── router/            # Configuration des routes
-├── App.vue
-└── main.js
+├─ src/
+│  ├─ assets/
+│  │  ├─ img/
+│  │  │  ├─ post/
+│  │  │  │  ├─ image-1.jpg
+│  │  │  │  ├─ image-2.jpg
+│  │  │  │  ├─ image-3.jpg
+│  │  │  │  └─ image-4.jpg
+│  │  │  └─ didi-franck.jpg
+│  │  └─ vue.svg
+│  ├─ components/
+│  │  ├─ __tests__/
+│  │  │  ├─ HelloWorld.spec.js
+│  │  │  └─ PrimaryButton.spec.js
+│  │  ├─ auth/
+│  │  │  └─ LoginForm.vue
+│  │  ├─ certification/
+│  │  ├─ ui/
+│  │  │  ├─ AccordionSection.vue
+│  │  │  ├─ AlertMessage.vue
+│  │  │  ├─ Header.vue
+│  │  │  ├─ InputField.vue
+│  │  │  ├─ ModuleCard.vue
+│  │  │  ├─ PostModal.vue
+│  │  │  ├─ PrimaryButton.vue
+│  │  │  ├─ ProgressBar.vue
+│  │  │  ├─ StatCard.vue
+│  │  │  └─ UserProfile.vue
+│  │  └─ HelloWorld.vue
+│  ├─ layouts/
+│  │  ├─ AuthLayout.vue
+│  │  └─ DashboardLayout.vue
+│  ├─ router/
+│  │  └─ index.js
+│  ├─ stores/
+│  │  ├─ index.js
+│  │  └─ postStore.js
+│  ├─ views/
+│  │  ├─ styles/
+│  │  │  ├─ CertificationDashboard.css
+│  │  │  └─ LoginView.css
+│  │  ├─ CertificationDashboard copy.vue
+│  │  ├─ CertificationDashboard.vue
+│  │  └─ LoginView.vue
+│  ├─ App copy.vue
+│  ├─ App.vue
+│  ├─ main.js
+│  └─ style.css
+
