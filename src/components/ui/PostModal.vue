@@ -137,7 +137,6 @@ watch(() => props.show, (newVal) => {
 </script>
 
 <style scoped>
-/* Les styles restent les mêmes que précédemment */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -223,6 +222,4 @@ watch(() => props.show, (newVal) => {
   padding: 40px;
   color: #6b7280;
 }
-
-/* Reste des styles (identique à la version précédente) */
 </style>

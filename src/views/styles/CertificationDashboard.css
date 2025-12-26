@@ -50,12 +50,19 @@
 /* Stats Grid */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   margin-bottom: 32px;
   width: 100%;
+} 
+
+.stats-grid > * {
+  grid-column: span 1;
 }
 
+.stat-card.col-span-2 {
+  grid-column: span 2; 
+}
 /* Container for accordion content - IMPORTANT */
 .accordion-content-wrapper {
   width: 100%;

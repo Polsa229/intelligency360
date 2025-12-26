@@ -28,7 +28,7 @@
 
     <!-- Stats Cards -->
     <div class="stats-grid">
-      <StatCard title="Progression" variant="progress" value="80%" label="3/12 modules" :show-progress="true"
+      <StatCard class="col-span-2" title="Progression" variant="progress" value="80%" label="3/12 modules" :show-progress="true"
         :progress="80" />
       <StatCard title="100%" variant="success" label="Cyberscore de certification" />
       <StatCard title="100%" variant="success" label="Score moyen des quiz" />
@@ -58,10 +58,10 @@
           <div class="modules-grid">
             <ModuleCard v-for="(module, index) in displayedPosts" :key="module.id" :id="module.id"
               :number="(index + 1).toString().padStart(2, '0')" :title="module.title"
-              :description="module.body.substring(0, 120) + '...'" :image="getModuleImage(module.id)"
+              :description="module.body.substring(0, 120) + '...'" :image="getModuleImage(index)"
               :duration="Math.floor(Math.random() * 20) + 10" :progress="Math.floor(Math.random() * 100)"
               :completed-modules="Math.floor(Math.random() * 12) + 1" :total-modules="12"
-              :status="getModuleStatus(index)" @click="handleModuleClick" />
+              :status="getModuleStatus(index)" @click="handleModuleClick(module.id)" />
           </div>
 
           <!-- Bouton Voir Tous -->
@@ -118,14 +118,14 @@ onMounted(() => {
 });
 
 // Images pour les modules
-const getModuleImage = (id) => {
+const getModuleImage = (index) => {
   const images = [
-    "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&h=300&fit=crop"
+    new URL('@/assets/img/post/image-1.jpg', import.meta.url).href,
+    new URL('@/assets/img/post/image-2.jpg', import.meta.url).href,
+    new URL('@/assets/img/post/image-3.jpg', import.meta.url).href,
+    new URL('@/assets/img/post/image-4.jpg', import.meta.url).href
   ];
-  return images[id % images.length];
+  return images[index % images.length];
 };
 
 const getModuleStatus = (index) => {
