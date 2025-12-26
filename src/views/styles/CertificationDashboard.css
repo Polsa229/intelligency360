@@ -4,6 +4,7 @@
   padding: 0;
 }
 
+
 .certification-dashboard {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
@@ -68,6 +69,8 @@
   width: 100%;
   overflow-x: hidden;
 }
+
+
 
 /* Modules Grid */
 .modules-grid {

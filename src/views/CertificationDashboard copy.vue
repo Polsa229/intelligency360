@@ -35,20 +35,20 @@
     </div>
 
     <!-- Accordion Section with Modules -->
-    <AccordionSection v-model="isProgressDetailsOpen" title="Détails de la progression"
+    <AccordionSection  title="Détails de la progression"
       subtitle="Votre progression détaillée, étape après étape.">
       <div class="accordion-content-wrapper">
         <!-- État de chargement -->
-        <div v-if="isLoading" class="loading-state">
+        <div v-if="postStore.isLoading" class="loading-state">
           <div class="skeleton-grid">
             <div v-for="i in 4" :key="i" class="skeleton-card"></div>
           </div>
         </div>
 
         <!-- État d'erreur -->
-        <div v-else-if="error" class="error-state">
-          <p class="error-message">Erreur de chargement: {{ error }}</p>
-          <PrimaryButton @click="fetchPosts" variant="outline">
+        <div v-else-if="postStore.error" class="error-state">
+          <p class="error-message">Erreur de chargement: {{ postStore.error }}</p>
+          <PrimaryButton @click="postStore.fetchPosts" variant="outline">
             Réessayer
           </PrimaryButton>
         </div>
@@ -56,7 +56,7 @@
         <!-- Contenu normal -->
         <div v-else>
           <div class="modules-grid">
-            <ModuleCard v-for="(module, index) in displayedPosts" :key="module.id" :id="module.id"
+            <ModuleCard v-for="(module, index) in postStore.displayedPosts" :key="module.id" :id="module.id"
               :number="(index + 1).toString().padStart(2, '0')" :title="module.title"
               :description="module.body.substring(0, 120) + '...'" :image="getModuleImage(index)"
               :duration="Math.floor(Math.random() * 20) + 10" :progress="Math.floor(Math.random() * 100)"
@@ -68,7 +68,7 @@
           <div class="view-all-container">
             <PrimaryButton variant="outline" @click="showModal = true">
               <Eye class="btn-icon" />
-              Voir tous les contenus ({{ posts.length }})
+              Voir tous les contenus ({{ postStore.posts.length }})
             </PrimaryButton>
           </div>
         </div>
@@ -98,19 +98,12 @@ import "./styles/CertificationDashboard.css";
 const isProgressDetailsOpen = ref(true);
 const showModal = ref(false);
 
-// Utilisation du store Pinia
+// ✅ CORRECTION: Utiliser le store directement sans déstructuration
 const postStore = usePostStore();
-const { posts, isLoading, error } = postStore;
-
-// Utilisez la computed property directement depuis le store
-// Elle restera réactive car elle vient du store complet
-const displayedPosts = postStore.displayedPosts;
 
 // Charger les données au montage
 onMounted(() => {
   postStore.fetchPosts();
-  console.log('Posts après fetch:', posts); // Notez le .value
-  console.log('Displayed posts:', displayedPosts); // Notez le .value
 });
 
 // Images pour les modules
