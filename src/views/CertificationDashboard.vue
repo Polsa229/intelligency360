@@ -28,8 +28,8 @@
 
     <!-- Stats Cards -->
     <div class="stats-grid">
-      <StatCard class="col-span-2" title="Progression" variant="progress" value="80%" label="3/12 modules" :show-progress="true"
-        :progress="80" />
+      <StatCard class="col-span-2" title="Progression" variant="progress" value="80%" label="3/12 modules"
+        :show-progress="true" :progress="80" />
       <StatCard title="100%" variant="success" label="Cyberscore de certification" />
       <StatCard title="100%" variant="success" label="Score moyen des quiz" />
     </div>
@@ -39,16 +39,16 @@
       subtitle="Votre progression détaillée, étape après étape.">
       <div class="accordion-content-wrapper">
         <!-- État de chargement -->
-        <div v-if="isLoading" class="loading-state">
+        <div v-if="postStore.isLoading" class="loading-state">
           <div class="skeleton-grid">
             <div v-for="i in 4" :key="i" class="skeleton-card"></div>
           </div>
         </div>
 
         <!-- État d'erreur -->
-        <div v-else-if="error" class="error-state">
-          <p class="error-message">Erreur de chargement: {{ error }}</p>
-          <PrimaryButton @click="fetchPosts" variant="outline">
+        <div v-else-if="postStore.error" class="error-state">
+          <p class="error-message">Erreur de chargement: {{ postStore.error }}</p>
+          <PrimaryButton @click="postStore.fetchPosts" variant="outline">
             Réessayer
           </PrimaryButton>
         </div>
@@ -56,7 +56,7 @@
         <!-- Contenu normal -->
         <div v-else>
           <div class="modules-grid">
-            <ModuleCard v-for="(module, index) in displayedPosts" :key="module.id" :id="module.id"
+            <ModuleCard v-for="(module, index) in postStore.displayedPosts" :key="module.id" :id="module.id"
               :number="(index + 1).toString().padStart(2, '0')" :title="module.title"
               :description="module.body.substring(0, 120) + '...'" :image="getModuleImage(index)"
               :duration="Math.floor(Math.random() * 20) + 10" :progress="Math.floor(Math.random() * 100)"
@@ -68,7 +68,7 @@
           <div class="view-all-container">
             <PrimaryButton variant="outline" @click="showModal = true">
               <Eye class="btn-icon" />
-              Voir tous les contenus ({{ posts.length }})
+              Voir tous les contenus ({{ postStore.posts.length }})
             </PrimaryButton>
           </div>
         </div>
@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import Header from "@/components/ui/Header.vue";
 import StatCard from "@/components/ui/StatCard.vue";
 import AccordionSection from "@/components/ui/AccordionSection.vue";
@@ -98,23 +98,12 @@ import "./styles/CertificationDashboard.css";
 const isProgressDetailsOpen = ref(true);
 const showModal = ref(false);
 
-// Utilisation du store Zustand
-const {
-  posts,
-  isLoading,
-  error,
-  fetchPosts,
-  displayedPosts
-} = usePostStore();
-
-// Computed
-// const displayedPosts = computed(() => getDisplayedPosts());
+// ✅ CORRECTION: Utiliser le store directement sans déstructuration
+const postStore = usePostStore();
 
 // Charger les données au montage
 onMounted(() => {
-  fetchPosts();
-  console.log('Posts après fetch:', posts); // Vérifiez si les posts sont chargés
-  console.log('Displayed posts:', displayedPosts); // Vérifiez si computed fonctionne
+  postStore.fetchPosts();
 });
 
 // Images pour les modules

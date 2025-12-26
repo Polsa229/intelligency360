@@ -63,10 +63,10 @@
 .stat-card.col-span-2 {
   grid-column: span 2; 
 }
-/* Container for accordion content - IMPORTANT */
+/* Container for accordion content  */
 .accordion-content-wrapper {
   width: 100%;
-  overflow-x: hidden; /* Empêche le débordement */
+  overflow-x: hidden;
 }
 
 /* Modules Grid */

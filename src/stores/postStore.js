@@ -19,6 +19,7 @@ export const usePostStore = defineStore('posts', () => {
       const response = await fetch('https://dummyjson.com/posts');
       const data = await response.json();
       posts.value = data.posts;
+      return data.posts;
     } catch (err) {
       error.value = err.message;
       console.error('Error fetching posts:', err);
@@ -27,12 +28,6 @@ export const usePostStore = defineStore('posts', () => {
     }
   };
 
-  // Getters (computed values)
-  const getDisplayedPosts = () => {
-    const post_s = posts.value;
-    return post_s.slice(0, 4);
-  };
-    
   const setSearchQuery = (query) => {
     searchQuery.value = query;
     currentPage.value = 1;
@@ -92,8 +87,7 @@ export const usePostStore = defineStore('posts', () => {
     setSearchQuery,
     setCurrentPage,
     
-    // Getters
-    getDisplayedPosts,
+    // Getters (computed)
     displayedPosts,
     filteredPosts,
     totalPages,
