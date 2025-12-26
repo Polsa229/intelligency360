@@ -9,7 +9,7 @@
       </div>
       <!-- Barre de recherche -->
       <div class="search-container">
-        <input type="text" :value="searchQuery" @input="(e) => setSearchQuery(e.target.value)"
+        <input type="text" :value="postStore.searchQuery" @input="(e) => postStore.setSearchQuery(e.target.value)"
           placeholder="Rechercher un contenu..." class="search-input" />
         <Search class="search-icon" />
       </div>
@@ -17,22 +17,22 @@
 
 
         <!-- État de chargement -->
-        <div v-if="isLoading" class="loading-container">
+        <div v-if="postStore.isLoading" class="loading-container">
           <div class="spinner"></div>
           <p>Chargement des contenus...</p>
         </div>
 
         <!-- État d'erreur -->
-        <div v-else-if="error" class="error-container">
-          <p class="error-message">Erreur: {{ error }}</p>
-          <PrimaryButton @click="fetchPosts" variant="outline">
+        <div v-else-if="postStore.error" class="error-container">
+          <p class="error-message">Erreur: {{ postStore.error }}</p>
+          <PrimaryButton @click="postStore.fetchPosts" variant="outline">
             Réessayer
           </PrimaryButton>
         </div>
 
         <!-- Liste des contenus -->
         <div v-else class="content-list">
-          <div v-for="post in filteredPosts" :key="post.id" class="content-item">
+          <div v-for="post in postStore.filteredPosts" :key="post.id" class="content-item">
             <div class="content-info">
               <h3>{{ post.title }}</h3>
               <p>{{ post.body.substring(0, 150) }}...</p>
@@ -56,23 +56,23 @@
           </div>
 
           <!-- Message si aucun résultat -->
-          <div v-if="filteredPosts.length === 0" class="no-results">
-            <p>Aucun contenu trouvé pour "{{ searchQuery }}"</p>
+          <div v-if="postStore.filteredPosts.length === 0" class="no-results">
+            <p>Aucun contenu trouvé pour "{{ postStore.searchQuery }}"</p>
           </div>
         </div>
 
       </div>
       <!-- Pagination -->
       <div class="pagination">
-        <button @click="prevPage" :disabled="currentPage === 1" class="pagination-button">
+        <button @click="prevPage" :disabled="postStore.currentPage === 1" class="pagination-button">
           &laquo; Précédent
         </button>
 
         <span class="page-info">
-          Page {{ currentPage }} sur {{ totalPages }}
+          Page {{ postStore.currentPage }} sur {{ postStore.totalPages }}
         </span>
 
-        <button @click="nextPage" :disabled="currentPage === totalPages" class="pagination-button">
+        <button @click="nextPage" :disabled="postStore.currentPage === postStore.totalPages" class="pagination-button">
           Suivant &raquo;
         </button>
       </div>
@@ -81,11 +81,10 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { watch } from 'vue';
 import { Search, X, Eye, ThumbsUp, ThumbsDown } from 'lucide-vue-next';
 import PrimaryButton from './PrimaryButton.vue';
 import { usePostStore } from '@/stores/postStore';
-import { watch } from 'vue';
 
 const props = defineProps({
   show: {
@@ -100,38 +99,26 @@ const onClose = () => {
   emit('close');
 };
 
-// Utilisation du store Zustand
-const {
-  posts,
-  isLoading,
-  error,
-  searchQuery,
-  currentPage,
-  fetchPosts,
-  setSearchQuery,
-  setCurrentPage,
-  filteredPosts,
-  totalPages,
-} = usePostStore();
+// ✅ CORRECTION: Utiliser le store directement sans déstructuration
+const postStore = usePostStore();
 
-// Computed values
 // Méthodes de pagination
 const nextPage = () => {
-  if (currentPage < totalPages.value) {
-    setCurrentPage(currentPage + 1);
+  if (postStore.currentPage < postStore.totalPages) {
+    postStore.setCurrentPage(postStore.currentPage + 1);
   }
 };
 
 const prevPage = () => {
-  if (currentPage > 1) {
-    setCurrentPage(currentPage - 1);
+  if (postStore.currentPage > 1) {
+    postStore.setCurrentPage(postStore.currentPage - 1);
   }
 };
 
 // Charger les posts si le modal s'ouvre
 watch(() => props.show, (newVal) => {
-  if (newVal && posts.length === 0) {
-    fetchPosts();
+  if (newVal && postStore.posts.length === 0) {
+    postStore.fetchPosts();
   }
 });
 </script>
