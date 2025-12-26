@@ -5,13 +5,13 @@ Ce fichier contient les instructions d'installation, choix techniques, tests et 
 ## 🔧 Installation
 
 Prérequis:
-- Node.js 18+ (ou LTS récente)
-- npm (ou yarn / pnpm)
+- Node.js 18+ (ou LTS récente) #20.19.4
+- npm (ou yarn / pnpm) #11.6.0
 
 Étapes:
 1. Cloner le dépôt
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/Polsa229/intelligency360.git
    cd intelligency360
    ```
 2. Installer les dépendances
