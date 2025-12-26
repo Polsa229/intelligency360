@@ -94,6 +94,7 @@ import StatCard from "@/components/ui/StatCard.vue";
 import AccordionSection from "@/components/ui/AccordionSection.vue";
 import ModuleCard from "@/components/ui/ModuleCard.vue";
 import PrimaryButton from "@/components/ui/PrimaryButton.vue";
+import "./styles/CertificationDashboard.css";
 
 // State
 const isProgressDetailsOpen = ref(true);
@@ -172,95 +173,3 @@ const handleModuleClick = (moduleId) => {
   console.log("Module clicked:", moduleId);
 };
 </script>
-
-<style scoped>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-.certification-dashboard {
-  min-height: 100vh;
-  background-color: #f9fafb;
-  padding: 32px 48px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-}
-
-/* Summary Section */
-.summary-content {
-  justify-items: start;
-}
-
-.summary-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
-.summary-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 8px;
-}
-
-.summary-description {
-  font-size: 14px;
-  color: #6b7280;
-}
-
-.summary-actions {
-  display: flex;
-  gap: 12px;
-}
-
-/* Stats Grid */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-/* Modules Grid */
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-  .modules-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .certification-dashboard {
-    padding: 24px 16px;
-  }
-
-  .summary-section {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .summary-actions {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modules-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>

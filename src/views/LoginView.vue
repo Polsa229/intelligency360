@@ -129,8 +129,8 @@ const handleSubmit = async () => {
 
   // Option 1: Remplir automatiquement avec les valeurs par défaut si les champs sont vides
   if (!formData.email && !formData.password) {
-    formData.email =  "test@gmail.com";
-    formData.password = "test@gmail.com";
+    formData.email =  "didi.franck@example.com";
+    formData.password = "didi.franck@example.com";
   }
 
   if (!validateForm()) {

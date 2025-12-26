@@ -1,9 +1,8 @@
 <template>
   <div>
-
     <header class="dashboard-header">
       <h1 class="page-title">Mon certificat</h1>
-  
+
       <UserProfile
         :name="user.name"
         :email="user.email"
@@ -26,7 +25,7 @@ const user = reactive({
   name: "Didi Franck",
   role: "Entreprise",
   email: "didi.franck@example.com",
-  avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Didi",
+  avatar: new URL('@/assets/img/didi-franck.jpg', import.meta.url).href,
 });
 
 // Methods
@@ -48,7 +47,7 @@ const handleLogout = () => {
 .dashboard-header {
   display: flex;
 
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 48px;
 }

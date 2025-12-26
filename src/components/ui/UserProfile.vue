@@ -3,8 +3,10 @@
     <img :src="avatar" :alt="name" class="user-avatar" />
 
     <div class="user-info">
-      <div class="user-name">{{ name }}</div>
-      <div v-if="role" class="user-role">{{ role }}</div>
+      <div class="user-name-role">
+        <div class="user-name">{{ name }}</div>
+        <div v-if="role" class="user-role">{{ role }}</div>
+      </div>
       <div class="user-email">{{ email }}</div>
     </div>
 
@@ -81,7 +83,7 @@ const props = defineProps({
   },
   avatar: {
     type: String,
-    default: "https://api.dicebear.com/7.x/avataaars/svg?seed=default",
+    default: "@/assets/img/didi.franck.jpg",
   },
   showMenu: {
     type: Boolean,
@@ -135,6 +137,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+
 .user-profile {
   position: relative;
   display: flex;
@@ -158,6 +161,12 @@ onUnmounted(() => {
   align-items: flex-start;
 }
 
+.user-name-role {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .user-name {
   font-size: 14px;
   font-weight: 600;
@@ -168,7 +177,7 @@ onUnmounted(() => {
   display: inline-block;
   font-size: 11px;
   color: #6b7280;
-  background-color: #f3f4f6;
+  background-color: #D6F5F7;
   padding: 2px 8px;
   border-radius: 4px;
   margin: 2px 0;
