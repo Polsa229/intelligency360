@@ -12,6 +12,11 @@ const routes = [
     component: AuthLayout,
     children: [
       {
+        path: "/",
+        name: "Base",
+        component: LoginView,
+      },
+      {
         path: "/login",
         name: "Login",
         component: LoginView,
@@ -28,6 +33,10 @@ const routes = [
         component: CertificationDashboard,
       },
     ],
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/",
   },
 ];
 
