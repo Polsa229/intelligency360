@@ -65,7 +65,6 @@
             Connexion
           </PrimaryButton>
         </div>
-        
       </div>
     </div>
   </div>
@@ -124,6 +123,9 @@ const validateForm = () => {
 };
 
 const handleSubmit = async () => {
+  emit("update:email", "test@gmail.com");
+  emit("update:password", "test@gmail.com");
+
   if (!validateForm()) {
     showError.value = true;
     return;
