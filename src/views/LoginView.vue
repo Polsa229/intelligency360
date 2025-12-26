@@ -75,8 +75,11 @@ import { ref, reactive } from "vue";
 import AlertMessage from "@/components/ui/AlertMessage.vue";
 import InputField from "@/components/ui/InputField.vue";
 import PrimaryButton from "@/components/ui/PrimaryButton.vue";
-
+import "./styles/LoginView.css";
+import { useRouter } from "vue-router";
 // State
+const navigation = useRouter();
+
 const showError = ref(true);
 const isLoading = ref(false);
 
@@ -123,8 +126,12 @@ const validateForm = () => {
 };
 
 const handleSubmit = async () => {
-  emit("update:email", "test@gmail.com");
-  emit("update:password", "test@gmail.com");
+
+  // Option 1: Remplir automatiquement avec les valeurs par défaut si les champs sont vides
+  if (!formData.email && !formData.password) {
+    formData.email =  "test@gmail.com";
+    formData.password = "test@gmail.com";
+  }
 
   if (!validateForm()) {
     showError.value = true;
@@ -139,7 +146,8 @@ const handleSubmit = async () => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     emit("submit", { ...formData });
-    console.log("Form submitted:", formData);
+    // console.log("Form submitted:", formData);
+    navigation.push('/dashboard'); // Redirect to dashboard after successful login
   } catch (error) {
     showError.value = true;
     console.error("Login error:", error);
@@ -153,92 +161,3 @@ const handleCloseError = () => {
 };
 </script>
 
-<style scoped>
-.login-container {
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-  padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-}
-
-.login-card {
-  flex-flow: column;
-  background: white;
-  border-radius: 8px;
-  padding: 40px;
-  width: 100%;
-  max-width: 554px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Header */
-.login-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: #1f2937;
-  margin-top: 32px;
-  margin-bottom: 12px;
-  line-height: 1.3;
-}
-
-.login-subtitle {
-  font-size: 14px;
-  color: #6b7280;
-  line-height: 1.6;
-  margin-bottom: 32px;
-}
-
-/* Links */
-.link-primary {
-  color: #3b82f6;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.link-primary:hover {
-  text-decoration: underline;
-}
-
-.link-secondary {
-  color: #3b82f6;
-  text-decoration: none;
-}
-
-.link-secondary:hover {
-  text-decoration: underline;
-}
-
-/* Form */
-.login-form {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Legal Notice */
-.legal-notice {
-  font-size: 13px;
-  color: #6b7280;
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
-
-/* Responsive */
-@media (max-width: 640px) {
-  .login-card {
-    padding: 24px;
-  }
-
-  .login-title {
-    font-size: 24px;
-  }
-
-  .login-subtitle {
-    font-size: 13px;
-  }
-}
-</style>
