@@ -48,7 +48,6 @@
         v-show="isOpen"
         :id="`accordion-content-${uid}`"
         class="accordion-content"
-        :style="contentStyle"
       >
         <div class="accordion-body" ref="bodyRef">
           <slot></slot>
@@ -90,7 +89,7 @@ const bodyRef = ref(null);
 const contentHeight = ref("auto");
 
 const contentStyle = computed(() => ({
-  maxHeight: contentHeight.value,
+  // maxHeight: contentHeight.value,
 }));
 
 watch(

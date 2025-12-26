@@ -13,7 +13,7 @@ tout en respectant les bonnes pratiques de développement, d’architecture et d
 
 - **Framework** : Vue 3 (Composition API)
 - **Bundler** : Vite
-- **Gestion d’état** : Vuex
+- **Gestion d’état** : Pinia (utilisé dans ce projet)
 - **Routing** : Vue Router
 - **HTTP Client** : Fetch / Axios
 - **Tests unitaires** : Vitest

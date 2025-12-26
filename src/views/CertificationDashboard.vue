@@ -39,16 +39,16 @@
       subtitle="Votre progression détaillée, étape après étape.">
       <div class="accordion-content-wrapper">
         <!-- État de chargement -->
-        <div v-if="isLoading" class="loading-state">
+        <div v-if="postStore.isLoading" class="loading-state">
           <div class="skeleton-grid">
             <div v-for="i in 4" :key="i" class="skeleton-card"></div>
           </div>
         </div>
 
         <!-- État d'erreur -->
-        <div v-else-if="error" class="error-state">
-          <p class="error-message">Erreur de chargement: {{ error }}</p>
-          <PrimaryButton @click="fetchPosts" variant="outline">
+        <div v-else-if="postStore.error" class="error-state">
+          <p class="error-message">Erreur de chargement: {{ postStore.error }}</p>
+          <PrimaryButton @click="postStore.fetchPosts" variant="outline">
             Réessayer
           </PrimaryButton>
         </div>
@@ -68,7 +68,7 @@
           <div class="view-all-container">
             <PrimaryButton variant="outline" @click="showModal = true">
               <Eye class="btn-icon" />
-              Voir tous les contenus ({{ posts.length }})
+              Voir tous les contenus ({{ postStore.posts.length }})
             </PrimaryButton>
           </div>
         </div>
@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import Header from "@/components/ui/Header.vue";
 import StatCard from "@/components/ui/StatCard.vue";
 import AccordionSection from "@/components/ui/AccordionSection.vue";
@@ -98,19 +98,15 @@ import "./styles/CertificationDashboard.css";
 const isProgressDetailsOpen = ref(true);
 const showModal = ref(false);
 
-// Utilisation du store Pinia
+// ✅ CORRECTION: Utiliser le store directement sans déstructuration
 const postStore = usePostStore();
-const { posts, isLoading, error } = postStore;
 
-// Utilisez la computed property directement depuis le store
-// Elle restera réactive car elle vient du store complet
-const displayedPosts = postStore.displayedPosts;
+// ✅ Créer une référence locale computed pour displayedPosts
+const displayedPosts = computed(() => postStore.displayedPosts);
 
 // Charger les données au montage
 onMounted(() => {
   postStore.fetchPosts();
-  console.log('Posts après fetch:', posts); // Notez le .value
-  console.log('Displayed posts:', displayedPosts); // Notez le .value
 });
 
 // Images pour les modules
