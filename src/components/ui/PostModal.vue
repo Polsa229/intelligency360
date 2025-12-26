@@ -156,7 +156,6 @@ watch(() => props.show, (newVal) => {
   background-color: white;
   border-radius: 12px;
   padding: 30px;
-  max-height: 80vh;
   width: 90%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
@@ -166,8 +165,8 @@ watch(() => props.show, (newVal) => {
   /* border-radius: 12px; */
   width: 100%;
   max-width: 1200px;
-  /* max-height: 80vh; */
-  /* overflow-y: auto; */
+  max-height: 70vh;
+  overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 

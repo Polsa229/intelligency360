@@ -113,6 +113,8 @@ const {
 // Charger les données au montage
 onMounted(() => {
   fetchPosts();
+  console.log('Posts après fetch:', posts); // Vérifiez si les posts sont chargés
+  console.log('Displayed posts:', displayedPosts); // Vérifiez si computed fonctionne
 });
 
 // Images pour les modules
