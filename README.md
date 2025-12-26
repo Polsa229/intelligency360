@@ -23,53 +23,40 @@ tout en respectant les bonnes pratiques de développement, d’architecture et d
 
 ## 📁 Structure du projet
 
-```txt
-├─ src/
-│  ├─ assets/
-│  │  ├─ img/
-│  │  │  ├─ post/
-│  │  │  │  ├─ image-1.jpg
-│  │  │  │  ├─ image-2.jpg
-│  │  │  │  ├─ image-3.jpg
-│  │  │  │  └─ image-4.jpg
-│  │  │  └─ didi-franck.jpg
-│  │  └─ vue.svg
-│  ├─ components/
-│  │  ├─ __tests__/
-│  │  │  ├─ HelloWorld.spec.js
-│  │  │  └─ PrimaryButton.spec.js
-│  │  ├─ auth/
-│  │  │  └─ LoginForm.vue
-│  │  ├─ certification/
-│  │  ├─ ui/
-│  │  │  ├─ AccordionSection.vue
-│  │  │  ├─ AlertMessage.vue
-│  │  │  ├─ Header.vue
-│  │  │  ├─ InputField.vue
-│  │  │  ├─ ModuleCard.vue
-│  │  │  ├─ PostModal.vue
-│  │  │  ├─ PrimaryButton.vue
-│  │  │  ├─ ProgressBar.vue
-│  │  │  ├─ StatCard.vue
-│  │  │  └─ UserProfile.vue
-│  │  └─ HelloWorld.vue
-│  ├─ layouts/
-│  │  ├─ AuthLayout.vue
-│  │  └─ DashboardLayout.vue
-│  ├─ router/
-│  │  └─ index.js
-│  ├─ stores/
-│  │  ├─ index.js
-│  │  └─ postStore.js
-│  ├─ views/
-│  │  ├─ styles/
-│  │  │  ├─ CertificationDashboard.css
-│  │  │  └─ LoginView.css
-│  │  ├─ CertificationDashboard copy.vue
-│  │  ├─ CertificationDashboard.vue
-│  │  └─ LoginView.vue
-│  ├─ App copy.vue
-│  ├─ App.vue
-│  ├─ main.js
-│  └─ style.css
+intelligency360/
+├── src/
+│   ├── components/         # Composants réutilisables
+│   │   ├── auth/           # Composants d'authentification
+│   │   ├── certification/  # Composants liés aux certifications
+│   │   ├── ui/             # Composants d'interface génériques
+│   │   └── __tests__/      # Tests unitaires des composants
+│   ├── layouts/            # Layouts principaux
+│   ├── router/             # Configuration du routage
+│   ├── stores/             # Gestion d'état avec Pinia
+│   ├── views/              # Pages principales
+│   │   └── styles/         # Styles spécifiques aux vues
+│   ├── assets/             # Ressources statiques
+│   ├── App.vue             # Composant racine
+│   └── main.js             # Point d'entrée de l'application
 
+## Installation et démarrage rapide
+
+# 1. Cloner le projet
+git clone https://github.com/Polsa229/intelligency360.git
+cd intelligency360
+
+# 2. Installer les dépendances
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+
+# 3. Lancer en développement
+npm run dev
+
+# 4. Construire pour la production
+npm run build
+
+# 5. Prévisualiser la build
+npm run preview

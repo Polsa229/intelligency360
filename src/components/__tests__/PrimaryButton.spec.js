@@ -1,10 +1,15 @@
-import { mount } from '@vue/test-utils'
+// src/components/__tests__/PrimaryButton.spec.js
 import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
 import PrimaryButton from '../ui/PrimaryButton.vue'
 
 describe('PrimaryButton', () => {
   it('affiche le label passé en prop', () => {
-    const wrapper = mount(PrimaryButton, { props: { label: 'Click me' } })
+    const wrapper = mount(PrimaryButton, { 
+      props: { 
+        label: 'Click me' 
+      } 
+    })
     expect(wrapper.text()).toContain('Click me')
   })
 
@@ -15,13 +20,21 @@ describe('PrimaryButton', () => {
   })
 
   it('n émet pas click quand disabled', async () => {
-    const wrapper = mount(PrimaryButton, { props: { disabled: true } })
+    const wrapper = mount(PrimaryButton, { 
+      props: { 
+        disabled: true 
+      } 
+    })
     await wrapper.trigger('click')
     expect(wrapper.emitted('click')).toBeUndefined()
   })
 
   it('n émet pas click quand loading', async () => {
-    const wrapper = mount(PrimaryButton, { props: { loading: true } })
+    const wrapper = mount(PrimaryButton, { 
+      props: { 
+        loading: true 
+      } 
+    })
     await wrapper.trigger('click')
     expect(wrapper.emitted('click')).toBeUndefined()
   })
